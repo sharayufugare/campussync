@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Mobile Website</title>
+
+  <!-- jQuery Mobile CSS -->
+
+  <link rel="stylesheet"
+        href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+  <!-- jQuery Library -->
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- jQuery Mobile JS -->
+
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+</head>
+
+<body>
+
+
+<!-- HOME PAGE -->
+
+<div data-role="page" id="home">
+
+  <!-- HEADER -->
+
+  <div data-role="header">
+
+    <h1>My Mobile Website</h1>
+
+  </div>
+
+
+  <!-- MAIN CONTENT -->
+
+  <div role="main" class="ui-content">
+
+    <h2>Welcome</h2>
+
+    <p>
+      This is a simple mobile website created using jQuery Mobile.
+    </p>
+
+    <!-- BUTTON -->
+
+    <a href="#about"
+       class="ui-btn ui-corner-all ui-shadow ui-btn-b">
+
+       About Page
+
+    </a>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <div data-role="footer">
+
+    <h4>SPPU Web Technology Practical</h4>
+
+  </div>
+
+</div>
+
+
+
+<!-- ABOUT PAGE -->
+
+<div data-role="page" id="about">
+
+  <!-- HEADER -->
+
+  <div data-role="header">
+
+    <h1>About</h1>
+
+  </div>
+
+
+  <!-- CONTENT -->
+
+  <div role="main" class="ui-content">
+
+    <p>
+      jQuery Mobile helps to build responsive mobile-friendly websites.
+    </p>
+
+    <!-- BACK BUTTON -->
+
+    <a href="#home"
+       class="ui-btn ui-corner-all ui-shadow ui-btn-inline">
+
+       Back to Home
+
+    </a>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <div data-role="footer">
+
+    <h4>Created using jQuery Mobile</h4>
+
+  </div>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,401 @@
+npm init -y
+
+npm install express mongoose body-parser
+
+crudapp
+│
+├── node_modules
+├── public
+│   └── index.html
+├── package.json
+└── server.js
+
+server.js=>
+const express = require('express');
+
+const mongoose = require('mongoose');
+
+const bodyParser = require('body-parser');
+
+const path = require('path');
+
+const app = express();
+
+const PORT = 3000;
+
+// Middleware
+app.use(bodyParser.json());
+
+// MongoDB Connection
+mongoose.connect('mongodb://127.0.0.1:27017/crudapp')
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.log(err));
+
+// Schema
+const userSchema = new mongoose.Schema({
+
+  name: String,
+  email: String
+
+});
+
+// Model
+const User = mongoose.model('User', userSchema);
+
+
+// CREATE USER API
+app.post('/users', async (req, res) => {
+
+  const { name, email } = req.body;
+
+  const existingUser = await User.findOne({
+
+    $or: [{ name }, { email }]
+
+  });
+
+  if (existingUser) {
+
+    return res.status(400).json({
+
+      message: 'User already exists'
+
+    });
+
+  }
+
+  const user = new User({
+
+    name,
+    email
+
+  });
+
+  await user.save();
+
+  res.status(201).json(user);
+
+});
+
+
+// GET USERS API
+app.get('/users', async (req, res) => {
+
+  const users = await User.find();
+
+  res.json(users);
+
+});
+
+
+// GET USER BY NAME
+app.get('/users/name/:name', async (req, res) => {
+
+  const user = await User.findOne({
+
+    name: req.params.name
+
+  });
+
+  if (!user) {
+
+    return res.status(404).json({
+
+      message: 'User not found'
+
+    });
+
+  }
+
+  res.json(user);
+
+});
+
+
+// UPDATE USER
+app.put('/users/name/:name', async (req, res) => {
+
+  const user = await User.findOne({
+
+    name: req.params.name
+
+  });
+
+  if (!user) {
+
+    return res.status(404).json({
+
+      message: 'User not found'
+
+    });
+
+  }
+
+  user.name = req.body.newName;
+
+  user.email = req.body.email;
+
+  await user.save();
+
+  res.json(user);
+
+});
+
+
+// DELETE USER
+app.delete('/users/name/:name', async (req, res) => {
+
+  const user = await User.findOne({
+
+    name: req.params.name
+
+  });
+
+  if (!user) {
+
+    return res.status(404).json({
+
+      message: 'User not found'
+
+    });
+
+  }
+
+  await User.deleteOne({
+
+    name: req.params.name
+
+  });
+
+  res.json({
+
+    message: 'User deleted successfully'
+
+  });
+
+});
+
+
+// Serve HTML
+app.get('/', (req, res) => {
+
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
+});
+
+
+// Start Server
+app.listen(PORT, () => {
+
+  console.log(`Server running at http://localhost:${PORT}`);
+
+});
+
+index.html=>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CRUD App</title>
+
+</head>
+
+<body>
+
+  <h1>User CRUD Operations</h1>
+
+  <!-- CREATE -->
+
+  <h3>Create User</h3>
+
+  <input type="text" id="name" placeholder="Enter Name">
+
+  <input type="email" id="email" placeholder="Enter Email">
+
+  <button onclick="createUser()">Create</button>
+
+  <hr>
+
+
+  <!-- READ -->
+
+  <h3>All Users</h3>
+
+  <button onclick="getUsers()">Get Users</button>
+
+  <ul id="userList"></ul>
+
+  <hr>
+
+
+  <!-- UPDATE -->
+
+  <h3>Update User</h3>
+
+  <input type="text" id="oldName" placeholder="Existing Name">
+
+  <input type="text" id="newName" placeholder="New Name">
+
+  <input type="email" id="newEmail" placeholder="New Email">
+
+  <button onclick="updateUser()">Update</button>
+
+  <hr>
+
+
+  <!-- DELETE -->
+
+  <h3>Delete User</h3>
+
+  <input type="text" id="deleteName" placeholder="Enter Name">
+
+  <button onclick="deleteUser()">Delete</button>
+
+
+<script>
+
+const API = 'http://localhost:3000/users';
+
+
+// CREATE
+function createUser() {
+
+  const name = document.getElementById('name').value;
+
+  const email = document.getElementById('email').value;
+
+  fetch(API, {
+
+    method: 'POST',
+
+    headers: {
+
+      'Content-Type': 'application/json'
+
+    },
+
+    body: JSON.stringify({
+
+      name,
+      email
+
+    })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    alert(data.message || 'User Created');
+
+    getUsers();
+
+  });
+
+}
+
+
+// READ
+function getUsers() {
+
+  fetch(API)
+
+  .then(res => res.json())
+
+  .then(users => {
+
+    const list = document.getElementById('userList');
+
+    list.innerHTML = '';
+
+    users.forEach(user => {
+
+      const li = document.createElement('li');
+
+      li.innerText = `${user.name} - ${user.email}`;
+
+      list.appendChild(li);
+
+    });
+
+  });
+
+}
+
+
+// UPDATE
+function updateUser() {
+
+  const oldName = document.getElementById('oldName').value;
+
+  const newName = document.getElementById('newName').value;
+
+  const newEmail = document.getElementById('newEmail').value;
+
+  fetch(`${API}/name/${oldName}`, {
+
+    method: 'PUT',
+
+    headers: {
+
+      'Content-Type': 'application/json'
+
+    },
+
+    body: JSON.stringify({
+
+      newName,
+      email: newEmail
+
+    })
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    alert(data.message || 'User Updated');
+
+    getUsers();
+
+  });
+
+}
+
+
+// DELETE
+function deleteUser() {
+
+  const deleteName = document.getElementById('deleteName').value;
+
+  fetch(`${API}/name/${deleteName}`, {
+
+    method: 'DELETE'
+
+  })
+
+  .then(res => res.json())
+
+  .then(data => {
+
+    alert(data.message);
+
+    getUsers();
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>
+
+run=>node server.js

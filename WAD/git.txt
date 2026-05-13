@@ -1,0 +1,19 @@
+# Open terminal in your project folder
+
+# Initialize git (if not already initialized)
+git init
+
+# Add your GitHub repo as remote
+git remote add origin https://github.com/sharayufugare/campussync.git
+
+# Add all files
+git add .
+
+# Commit files
+git commit -m "Initial upload"
+
+# Set main branch
+git branch -M main
+
+# Push to GitHub
+git push -u origin main

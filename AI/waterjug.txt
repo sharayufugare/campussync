@@ -1,0 +1,41 @@
+# Water Jug Problem
+
+x, y = 0, 0
+
+print((x, y))
+
+y = 5
+print((x, y))
+
+x = 3
+y = 2
+print((x, y))
+
+x = 0
+print((x, y))
+
+x = 2
+y = 0
+print((x, y))
+
+y = 5
+print((x, y))
+
+x = 3
+y = 4
+print((x, y))
+
+# Tower of Hanoi
+
+def hanoi(n, A, B, C):
+    if n == 1:
+        print("Move Disk 1 from", A, "to", C)
+        return
+
+    hanoi(n-1, A, C, B)
+    print("Move Disk", n, "from", A, "to", C)
+    hanoi(n-1, B, A, C)
+
+n = int(input("Enter number of disks: "))
+
+hanoi(n, 'A', 'B', 'C')

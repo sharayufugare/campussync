@@ -1,0 +1,205 @@
+# N-Queen Problem using
+# 1. Hill Climbing
+# 2. Simulated Annealing
+# 3. A* Algorithm
+
+import random
+import math
+import heapq
+
+# -----------------------------
+# Print Chess Board
+# -----------------------------
+def print_board(board):
+    n = len(board)
+
+    for i in range(n):
+        for j in range(n):
+
+            if board[i] == j:
+                print("Q", end=" ")
+            else:
+                print(".", end=" ")
+
+        print()
+
+
+# -----------------------------
+# Count Attacking Queens
+# -----------------------------
+def attacks(board):
+
+    n = len(board)
+    count = 0
+
+    for i in range(n):
+        for j in range(i + 1, n):
+
+            # Same column
+            if board[i] == board[j]:
+                count += 1
+
+            # Same diagonal
+            if abs(board[i] - board[j]) == abs(i - j):
+                count += 1
+
+    return count
+
+
+# ==================================================
+# 1. HILL CLIMBING
+# ==================================================
+def hill_climbing(n):
+
+    board = [random.randint(0, n - 1) for i in range(n)]
+
+    while True:
+
+        current = attacks(board)
+
+        if current == 0:
+            return board
+
+        best = board[:]
+        best_attack = current
+
+        for row in range(n):
+
+            old = board[row]
+
+            for col in range(n):
+
+                board[row] = col
+
+                new_attack = attacks(board)
+
+                if new_attack < best_attack:
+                    best_attack = new_attack
+                    best = board[:]
+
+            board[row] = old
+
+        if best_attack == current:
+            return None
+
+        board = best
+
+
+# ==================================================
+# 2. SIMULATED ANNEALING
+# ==================================================
+def simulated_annealing(n):
+
+    board = [random.randint(0, n - 1) for i in range(n)]
+
+    temp = 100
+
+    while temp > 0.1:
+
+        if attacks(board) == 0:
+            return board
+
+        new_board = board[:]
+
+        row = random.randint(0, n - 1)
+        col = random.randint(0, n - 1)
+
+        new_board[row] = col
+
+        diff = attacks(board) - attacks(new_board)
+
+        if diff > 0:
+            board = new_board
+
+        else:
+            probability = math.exp(diff / temp)
+
+            if random.random() < probability:
+                board = new_board
+
+        temp = temp * 0.95
+
+    return None
+
+
+# ==================================================
+# 3. A* ALGORITHM
+# ==================================================
+def a_star(n):
+
+    pq = []
+
+    heapq.heappush(pq, (0, []))
+
+    while pq:
+
+        cost, board = heapq.heappop(pq)
+
+        row = len(board)
+
+        # Goal state
+        if row == n:
+            return board
+
+        for col in range(n):
+
+            safe = True
+
+            for r in range(row):
+
+                # Check column and diagonal
+                if board[r] == col or abs(board[r] - col) == abs(r - row):
+                    safe = False
+                    break
+
+            if safe:
+
+                new_board = board + [col]
+
+                h = attacks(new_board)
+
+                heapq.heappush(pq, (h, new_board))
+
+    return None
+
+
+# ==================================================
+# MAIN PROGRAM
+# ==================================================
+
+n = int(input("Enter N value: "))
+
+# Hill Climbing
+print("\n--- Hill Climbing ---")
+
+result = hill_climbing(n)
+
+if result:
+    print("Solution:", [x + 1 for x in result])
+    print_board(result)
+else:
+    print("No Solution")
+
+
+# Simulated Annealing
+print("\n--- Simulated Annealing ---")
+
+result = simulated_annealing(n)
+
+if result:
+    print("Solution:", [x + 1 for x in result])
+    print_board(result)
+else:
+    print("No Solution")
+
+
+# A* Algorithm
+print("\n--- A* Algorithm ---")
+
+result = a_star(n)
+
+if result:
+    print("Solution:", [x + 1 for x in result])
+    print_board(result)
+else:
+    print("No Solution")

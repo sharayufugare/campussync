@@ -1,0 +1,58 @@
+Check Docker version
+docker --version
+
+# Pull Ubuntu image
+docker pull ubuntu
+
+# Check images
+docker images
+
+# Run Ubuntu container
+docker run -it ubuntu /bin/bash
+
+# Inside container
+apt update
+apt install apache2 -y
+
+# Exit container
+exit
+
+# Check containers
+docker ps -a
+
+# Commit container into new image
+docker commit -a "Shaily" -m "Installed Apache" container_id ubuntu-apache
+
+# Check images again
+docker images
+
+# Run new image
+docker run -it ubuntu-apache /bin/bash
+
+# Exit container
+Exit
+
+Dockerfile Method
+Create Dockerfile
+
+notepad Dockerfile (nano Dockerfile ) ----->> text editor meee ye dono daalke dekh lenaa koi ek sahi hai
+Write inside:
+FROM ubuntu
+RUN apt update
+RUN apt install apache2 -y
+CMD ["bash"]
+Save and close.
+Build Docker Image
+docker build -t test .
+
+Check Images
+docker images
+
+Run Container
+You wrote:
+dockerrun it test/bin/bash
+Correct command:
+docker run -it test /bin/bash
+
+Exit Container
+exit

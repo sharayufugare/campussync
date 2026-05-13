@@ -1,0 +1,39 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.probability import FreqDist
+from nltk.corpus import stopwords
+from nltk import pos_tag
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+
+text = 'hi love'
+
+tokens = word_tokenize(text)
+
+print("Tokenized Words:")
+print(tokens)
+
+
+freq = FreqDist(tokens)
+
+print("\nWord Frequency:")
+print(freq)
+
+
+stop_words = set(stopwords.words('english'))
+
+filtered_words = [
+    word for word in tokens
+    if word.lower() not in stop_words and word.isalpha()
+]
+
+print("\nAfter Removing Stop Words:")
+print(filtered_words)
+
+
+pos_tags = pos_tag(filtered_words)
+
+print("\nPOS Tagging:")
+print(pos_tags)
