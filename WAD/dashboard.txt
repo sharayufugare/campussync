@@ -137,11 +137,11 @@
 **********************script.js**********
 
 
-const toggleBtn = document.getElementById("toggleBtn");
+const toggleBtn = document.getElementById("toggleBtn"); // This line selects an HTML element with id toggleBtn , sidebar
 const sidebar = document.getElementById("sidebar");
 
-toggleBtn.addEventListener("click", () => {
-  sidebar.classList.toggle("show");
+toggleBtn.addEventListener("click", () => {     //addEventListener = wait for event , "click" = event type , () => {} = function to run on click
+  sidebar.classList.toggle("show"); //If "show" class is NOT present → ADD it , If "show" class is already present → REMOVE it
 });
 
 
@@ -151,6 +151,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
+/* . Used to select a class*/
 
 /* Sidebar */
 .sidebar {
@@ -177,7 +178,7 @@ body {
   width: 100%;
 }
 
-/* Responsive */
+/* Responsive  @ Apply styles only when screen size ≤ 768px */
 @media (max-width: 768px) {
 
   .sidebar {
@@ -191,3 +192,4 @@ body {
     left: 0;
   }
 }
+

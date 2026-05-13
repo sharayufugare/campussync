@@ -82,7 +82,7 @@ button:hover {
 
 document.getElementById('registrationForm').addEventListener('submit', function(e) {
 
-  e.preventDefault();
+  e.preventDefault(); //Stops page refresh after submit
 
   // Get form values
   const userData = {
@@ -92,18 +92,18 @@ document.getElementById('registrationForm').addEventListener('submit', function(
   };
 
   // AJAX Request
-  let xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest(); //Creates request object
 
-  xhr.open("POST", "https://jsonplaceholder.typicode.com/posts", true);
+  xhr.open("POST", "https://jsonplaceholder.typicode.com/posts", true); //POST → send data ,fake API (testing server) , async = true
 
-  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader("Content-Type", "application/json"); //Data is sent in JSON format
 
-  xhr.onload = function () {
+  xhr.onload = function () { //Runs when server responds
 
-    if (xhr.status === 201 || xhr.status === 200) {
+    if (xhr.status === 201 || xhr.status === 200) { //Means request successful
 
       // Get existing users
-      let users = JSON.parse(localStorage.getItem('users')) || [];
+      let users = JSON.parse(localStorage.getItem('users')) || []; //Get existing users , If none → empty array
 
       // Check duplicate email
       const userExists = users.some(user => user.email === userData.email);
@@ -114,7 +114,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         users.push(userData);
 
         // Save to localStorage
-        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('users', JSON.stringify(users)); //Stores data permanently in browser
 
         alert("Registration Successful");
 
@@ -132,7 +132,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
   };
 
   // Send data
-  xhr.send(JSON.stringify(userData));
+  xhr.send(JSON.stringify(userData)); //is used in AJAX (XMLHttpRequest) to send data to a server.
 
 });
 
@@ -171,9 +171,9 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
 *******************user-list.js***************
 
-const users = JSON.parse(localStorage.getItem('users')) || [];
+const users = JSON.parse(localStorage.getItem('users')) || []; //converts string → JavaScript object/array
 
-const userList = document.getElementById('userList');
+const userList = document.getElementById('userList'); 
 
 // Display users
 if (users.length === 0) {
@@ -188,16 +188,16 @@ if (users.length === 0) {
 
     li.textContent = `Name: ${user.name}, Email: ${user.email}`;
 
-    userList.appendChild(li);
+    userList.appendChild(li);//Adds list item into HTML page
 
   });
 
 }
 
 // Clear localStorage
-document.getElementById('clearDataBtn').addEventListener('click', function() {
+document.getElementById('clearDataBtn').addEventListener('click', function() { //When user clicks “Clear Data” button
 
-  localStorage.removeItem('users');
+  localStorage.removeItem('users'); //Deletes all stored users
 
   alert("Data Cleared");
 

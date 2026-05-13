@@ -19,7 +19,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <!-- jQuery Mobile JS -->
+  <!-- jQuery Mobile JS - Turns website into mobile app-like UI -->
 
   <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
