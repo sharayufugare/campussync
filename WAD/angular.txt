@@ -307,3 +307,121 @@ export class App {
 
 }
 
+**********************login.css************
+
+/* login.css */
+
+body{
+    font-family: Arial, sans-serif;
+}
+
+.login-container{
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 10px lightgray;
+}
+
+h2{
+    margin-bottom: 20px;
+}
+
+input{
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+button{
+    width: 100%;
+    padding: 10px;
+    background-color: royalblue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: blue;
+}
+
+****************profile.css***************
+
+/* profile.css */
+
+body{
+    font-family: Arial;
+}
+
+div{
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+button{
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: darkred;
+}
+
+******************register.css*******************
+
+/* register.css */
+
+body{
+    font-family: Arial;
+}
+
+form{
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    text-align: center;
+}
+
+h2{
+    text-align: center;
+}
+
+input{
+    width: 90%;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+button{
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: darkblue;
+}
