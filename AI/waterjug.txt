@@ -39,3 +39,70 @@ def hanoi(n, A, B, C):
 n = int(input("Enter number of disks: "))
 
 hanoi(n, 'A', 'B', 'C')
+
+
+# Water Jug Problem using BFS in Python
+
+from collections import deque
+
+# Capacities of jugs
+jug1_capacity = 4
+jug2_capacity = 3
+
+# Target amount
+target = 2
+
+# BFS function
+def water_jug_bfs():
+    visited = set()
+    queue = deque()
+
+    # Initial state
+    queue.append((0, 0, []))
+
+    while queue:
+        jug1, jug2, path = queue.popleft()
+
+        # Skip visited states
+        if (jug1, jug2) in visited:
+            continue
+
+        visited.add((jug1, jug2))
+        path = path + [(jug1, jug2)]
+
+        # Check goal
+        if jug1 == target or jug2 == target:
+            return path
+
+        # Possible operations
+        next_states = [
+            (jug1_capacity, jug2),  # Fill jug1
+            (jug1, jug2_capacity),  # Fill jug2
+            (0, jug2),              # Empty jug1
+            (jug1, 0),              # Empty jug2
+        ]
+
+        # Transfer jug1 -> jug2
+        transfer = min(jug1, jug2_capacity - jug2)
+        next_states.append((jug1 - transfer, jug2 + transfer))
+
+        # Transfer jug2 -> jug1
+        transfer = min(jug2, jug1_capacity - jug1)
+        next_states.append((jug1 + transfer, jug2 - transfer))
+
+        # Add next states to queue
+        for state in next_states:
+            if state not in visited:
+                queue.append((state[0], state[1], path))
+
+    return None
+
+
+# Run program
+solution = water_jug_bfs()
+
+# Print solution
+print("Steps to get 2 liters:\n")
+
+for step in solution:
+    print(step)
