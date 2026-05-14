@@ -425,3 +425,154 @@ button{
 button:hover{
     background-color: darkblue;
 }
+
+
+
+//user.service.ts -
+//It stores user data temporarily in memory.
+
+//this.router.navigate(['/profile']);
+
+👉 Simple meaning:
+If login is correct → user goes to profile page
+
+📌 File: app.routes.ts
+
+Routes:
+Path	Page
+/register	Register page
+/login	Login page
+/profile	Profile page
+
+📌 File: app.html
+
+Contains:
+Navigation links
+Router outlet
+<a routerLink="/register">Register</a>
+<a routerLink="/login">Login</a>
+<router-outlet></router-outlet>
+
+👉 Meaning:
+
+Links switch pages without reloading
+
+1.src/ (Main folder)
+
+👉 इथे तुमचा actual app code असतो
+
+
+📁 2. app/ folder
+
+👉 हा सर्वात important भाग आहे
+
+तुमचे files:
+
+register component
+login component
+profile component
+app component
+routing
+
+3. node_modules/
+
+👉 हे automatic install होतं
+
+✔ यामध्ये Angular framework, libraries असतात
+✔ npm install ने तयार होतं
+❌ हे manually edit करायचं नाही
+
+4. package.json
+
+👉 project ची “list of dependencies”
+
+यात:
+
+Angular version
+installed packages
+scripts (ng serve, build)
+
+5. angular.json
+
+👉 Angular project configuration file
+
+यात:
+
+project structure info
+build settings
+assets path
+
+6. tsconfig.json
+
+👉 TypeScript settings file
+
+1. Purpose of Angular in web development
+
+Angular is used to build single-page web applications (SPA). It helps create fast, dynamic, and structured web apps using components.
+
+2. Creating a new Angular project
+
+We use Angular CLI command:
+
+ng new project-name
+
+It creates a new Angular application with all required files and setup.
+
+3. Function of ng serve command
+
+ng serve is used to run the Angular application on a local server. It compiles the project and opens it in the browser, usually at http://localhost:4200.
+
+4. What are components in Angular?
+
+Components are the building blocks of Angular apps.
+Each component has:
+
+HTML (view)
+CSS (style)
+TypeScript (logic)
+
+👉 They are important because they make the app modular and reusable.
+
+5. Handling user input using Angular forms
+
+We handle user input using:
+
+Template-driven forms (ngModel)
+Reactive forms
+
+Example:
+
+<input [(ngModel)]="username">
+
+This binds input value to variable.
+
+6. Storing user data in local storage
+
+We use browser local storage:
+
+localStorage.setItem('user', JSON.stringify(user));
+
+To get data:
+
+JSON.parse(localStorage.getItem('user'));
+7. Purpose of ngModel directive
+
+ngModel is used for two-way data binding.
+It connects input fields with variables in the component.
+
+👉 Changes in input → update variable automatically.
+
+8. Angular dependency injection
+
+Angular dependency injection is a design pattern where services are automatically provided to components.
+
+👉 It works by:
+
+Creating a service once
+Injecting it into components using constructor
+
+Example:
+
+constructor(private userService: UserService) {}
+
+✔ It helps in code reusability and easy testing.

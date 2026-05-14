@@ -399,3 +399,191 @@ function deleteUser() {
 </html>
 
 run=>node server.js
+
+
+🌐 Node.js
+
+Node.js is a backend runtime used to run JavaScript outside browser.
+
+👉 It is:
+
+Fast
+Event-driven
+Non-blocking
+🚀 Express.js
+
+Express.js is a framework used to:
+
+Create APIs easily
+Handle routes (GET, POST, PUT, DELETE)
+🗄️ MongoDB
+
+MongoDB is a NoSQL database where data is stored in:
+
+Collections
+Documents (JSON format)
+🔗 Mongoose
+
+Mongoose is used to:
+
+Connect Node.js with MongoDB
+Define schema
+Perform database operations easily
+📦 3. What is CRUD?
+
+CRUD means:
+
+Operation	Meaning
+Create	Add new data
+Read	Get data
+Update	Modify data
+Delete	Remove data
+
+1. Initialize project
+npm init -y
+👉 Meaning:
+Creates package.json
+Automatically sets default settings
+No questions asked (y = yes to all)
+
+2. Install dependencies
+npm install express mongoose body-parser
+👉 Meaning:
+Package	Use
+express	Create server
+mongoose	Connect MongoDB
+body-parser	Read JSON data from request
+
+POST API Explanation (Line by Line)
+app.post('/users', async (req, res) => {
+👉 Meaning:
+app.post → creates a POST API
+'/users' → route URL (endpoint)
+async → allows use of await (for database operations)
+(req, res) →
+req = request (data coming from frontend)
+res = response (data sent back to frontend)
+
+✔ This API is used to create a new user
+
+const { name, email } = req.body;
+👉 Meaning:
+Gets data sent from frontend
+Extracts:
+name
+email
+
+📌 Example request body:
+
+{
+  "name": "Rahul",
+  "email": "rahul@gmail.com"
+}
+
+✔ So now we have user input values
+
+const existingUser = await User.findOne({
+  $or: [{ name }, { email }]
+});
+👉 Meaning:
+Checks database if user already exists
+🔍 $or means:
+
+👉 match if ANY condition is true:
+
+same name OR
+same email
+findOne():
+searches one matching record in MongoDB
+
+✔ Purpose:
+👉 Prevent duplicate users
+
+if (existingUser) {
+👉 Meaning:
+If user is already found in database
+return res.status(400).json({
+  message: 'User already exists'
+});
+👉 Meaning:
+400 = Bad Request error
+Sends response to frontend:
+{
+  "message": "User already exists"
+}
+
+✔ return stops further execution
+
+const user = new User({
+  name,
+  email
+});
+👉 Meaning:
+Creates new user object using Mongoose model
+
+📌 This is NOT saved yet — just created in memory
+
+await user.save();
+👉 Meaning:
+Saves user into MongoDB database
+await waits until saving is completed
+
+✔ Now user is permanently stored in database
+
+res.status(201).json(user);
+👉 Meaning:
+Sends response back to frontend
+201 = Created successfully
+Sends created user data in JSON format
+
+📌 Example response:
+
+{
+  "_id": "123abc",
+  "name": "Rahul",
+  "email": "rahul@gmail.com"
+}
+});
+👉 Meaning:
+Ends the POST API function
+🎯 FINAL SIMPLE FLOW
+
+👉 When user sends request:
+
+Get data (name, email)
+Check if user already exists
+If yes → send error message
+If no → create new user
+Save in MongoDB
+
+what is async , await?
+async and await are used in JavaScript to handle asynchronous operations in a simple way
+
+Make function asynchronous” means:
+“Don’t block the program while doing slow work. Let it continue other tasks and handle result later.”
+
+1. Role of Mongoose in Node.js
+
+Mongoose is used to connect Node.js with MongoDB.
+It helps to define schema, validate data, and perform database operations easily.
+
+2. Purpose of body-parser middleware
+
+Express.js middleware body-parser is used to read JSON data from request body and convert it into JavaScript object so server can use it.
+
+3. How POST method works in CRUD API
+
+POST method is used to create new data in the database.
+It takes data from request body (req.body) and saves it into MongoDB using Mongoose.
+
+4. Difference between PUT and GET
+GET	PUT
+Used to read data	Used to update data
+Does not change data	Modifies existing data
+Data sent in URL	Data sent in request body
+5. findOne() vs find()
+findOne() → returns only one matching document
+find() → returns all matching documents (array)
+6. deleteOne() vs deleteMany()
+deleteOne() → deletes only first matching record
+deleteMany() → deletes all matching records
